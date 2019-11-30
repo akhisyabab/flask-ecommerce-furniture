@@ -21,6 +21,7 @@ def create_app(script_info=None):
         AllUsers, SecretResource, UserProfile, UserEdit, AddAdmin
 
     from project.admin.views import admin_blueprint
+    from project.main.views import main_blueprint
 
     # instantiate the app
     app = Flask(__name__, static_url_path='')
@@ -71,6 +72,7 @@ def create_app(script_info=None):
 
     # register the blueprints
     app.register_blueprint(admin_blueprint)
+    app.register_blueprint(main_blueprint)
 
     # shell context for flask cli
     @app.shell_context_processor
