@@ -1,0 +1,4 @@
+export FLASK_ENV=production
+export DATABASE_URL='postgres://flaskecommercefurnitureuser:flaskecommercefurniturepassword@localhost/flask_ecommerce_furniture_dev'
+export DATABASE_TEST_URL='postgres://flaskecommercefurnitureuser:flaskecommercefurniturepassword@localhost/flask_ecommerce_furniture_test'
+export APP_SETTINGS='project.config.ProductionConfig'

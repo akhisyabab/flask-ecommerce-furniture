@@ -1,0 +1,48 @@
+version: '3.6'
+
+services:
+
+  engine:
+    container_name: 'flask-ecommerce-furniture-app'
+    build:
+      context: ./
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://flaskecommercefurnitureuser:flaskecommercefurniturepassword@engine-db:5432/flask_ecommerce_furniture_dev
+      - DATABASE_TEST_URL=postgres://flaskecommercefurnitureuser:flaskecommercefurniturepassword@engine-db:5432/flask_ecommerce_furniture_test
+    depends_on:
+      - engine-db
+    restart: on-failure
+
+  engine-db:
+    container_name: 'flask-ecommerce-furniture-db'
+    build:
+      context: services/db
+      dockerfile: Dockerfile
+    volumes:
+      - engine-db_volume:/usr/local/pgsql/data
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=flaskecommercefurnitureuser
+      - POSTGRES_PASSWORD=flaskecommercefurniturepassword
+
+  nginx:
+    container_name: 'flask-ecommerce-furniture-nginx'
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-dev
+    restart: on-failure
+    ports:
+      - 80:80
+    depends_on:
+      - engine
+
+volumes:
+  engine-db_volume:

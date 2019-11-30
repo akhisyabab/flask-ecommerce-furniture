@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+
+{% block body %}
+     {% include 'navbar.html' %}
+
+	{% include 'sidebar.html' %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Users</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Users data</li>
+                </ol>
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <section class="content">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">User data</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Address</th>
+                            <th>Register date</th>
+                            <th>Account type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr class="odd gradeX">
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.address }}</td>
+                            <td>{{ user.register_on }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.user_delete', user_id=user.id) }}">Delete</a>
+                                ||
+                                <a href="{{ url_for('admin.user_edit', user_id=user.id) }}">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </section>
+
+    </div>
+    {% include 'footer.html' %}
+{% endblock %}
