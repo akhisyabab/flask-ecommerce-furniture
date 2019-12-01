@@ -63,7 +63,7 @@ class User(db.Model):
         return sha256.verify(password, hash)
 
     def __repr__(self):
-        return '<title {}'.format(self.username)
+        return 'User {}'.format(self.username)
 
     def to_json(self):
         return {
@@ -71,6 +71,65 @@ class User(db.Model):
             'username': self.username,
             'password': self.password
         }
+
+
+class Category(db.Model):
+
+    __tablename__ = "categories"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128), nullable=True)
+
+    def __init__(self, name='uncategorized'):
+        self.name = name
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
+    def __repr__(self):
+        return 'Category {}'.format(self.name)
+
+
+class Product(db.Model):
+
+    __tablename__ = "products"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128), nullable=False)
+    price = db.Column(db.DECIMAL, nullable=False)
+    description = db.Column(db.String(128), nullable=True)
+    image = db.Column(db.String(128), nullable=False)
+    stock = db.Column(db.Integer, nullable=True)
+    category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+    def __init__(self, name, price, description, image, stock, category):
+        self.name = name
+        self.price = price
+        self.description = description
+        self.image = image
+        self.stock = stock
+        self.category = category
+
+    @classmethod
+    def find_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
+
+    def __repr__(self):
+        return 'Product {}'.format(self.name)
+
+
+class Cart(db.Model):
+
+    __tablename__ = "carts"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
+
+    def __init__(self, user_id, product_id):
+        self.user_id = user_id
+        self.product_id = product_id
 
 
 class RevokedToken(db.Model):

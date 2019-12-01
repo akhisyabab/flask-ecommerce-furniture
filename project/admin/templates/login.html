@@ -18,8 +18,10 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+{% from "_form_macros.html" import render_field %}
 <body class="hold-transition login-page">
 <div class="login-box">
+  {% include 'allert_message.html' %}
   <div class="login-logo">
     <a href="{{ url_for('static',filename='admin/index2.html') }}"><b>Flask</b>Furniture</a>
   </div>

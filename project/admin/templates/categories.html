@@ -2,7 +2,7 @@
 {% from "_form_macros.html" import render_field %}
 
 {% block title %}
-Users
+Categories
 {% endblock %}
 
 {% block body %}
@@ -15,12 +15,12 @@ Users
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Users</h1>
+                <h1 class="m-0 text-dark">Categories</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Users data</li>
+                  <li class="breadcrumb-item active">Categories data</li>
                 </ol>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -33,31 +33,25 @@ Users
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <a href="{{ url_for('admin.user_add') }}" class="card-title">+ Add user</a>
+                  <a href="{{ url_for('admin.category_add') }}" class="card-title">+ Add category</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Address</th>
-                            <th>Register date</th>
-                            <th>Account type</th>
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for category in categories %}
                         <tr class="odd gradeX">
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.address }}</td>
-                            <td>{{ user.register_on }}</td>
-                            <td>{{ user.role }}</td>
+                            <td>{{ category.name }}</td>
                             <td>
-                                <a href="{{ url_for('admin.user_delete', user_id=user.id) }}">Delete</a>
+                                <a href="{{ url_for('admin.category_delete', category_id=category.id) }}">Delete</a>
                                 ||
-                                <a href="{{ url_for('admin.user_edit', user_id=user.id) }}">Edit</a>
+                                <a href="{{ url_for('admin.category_edit', category_id=category.id) }}">Edit</a>
                             </td>
                         </tr>
                         {% endfor %}

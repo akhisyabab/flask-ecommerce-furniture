@@ -2,7 +2,7 @@
 {% from "_form_macros.html" import render_field %}
 
 {% block title %}
-Users
+Categories
 {% endblock %}
 
 {% block body %}
@@ -16,12 +16,12 @@ Users
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Users</h1>
+                    <h1 class="m-0 text-dark">Categories</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Users data</li>
+                        <li class="breadcrumb-item active">Categories data</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -34,24 +34,17 @@ Users
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Add user</h3>
+                        <h3>Add category</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form role="form" action="{{ url_for('admin.user_add') }}" method="post">
+                        <form role="form" action="{{ url_for('admin.category_add') }}" method="post">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>User name</label>
+                                    <label>Category name</label>
                                     <div class="nk-int-st">
-                                        <input type="text" class="form-control input-sm" placeholder="username"
-                                               name="username">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <div class="nk-int-st">
-                                        <input type="password" class="form-control input-sm" placeholder="password"
-                                               name="password">
+                                        <input type="text" class="form-control input-sm" placeholder="category-name"
+                                               name="category-name">
                                     </div>
                                 </div>
                             </div>

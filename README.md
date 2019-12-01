@@ -8,6 +8,8 @@ admin: AdminLTE
 
 main: asbab
 
+flask boilerplate by me: https://github.com/akhisyabab/flask-starting
+
 <hr><hr>
 
 ## DOCS

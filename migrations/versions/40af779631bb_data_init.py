@@ -40,7 +40,7 @@ credentials = [
     {
         'role': 'user',
         'username': 'user',
-        'password': '$pbkdf2-sha256$29000$DmFs7X0PAcC41zonRCjFmA$x7kmrgRS0yZ0tE/y3kjt36szOc0TgEtzTCozH8hfg4k', # user12345
+        'password': '$pbkdf2-sha256$29000$MaZUKiVkDGGMEcJ47x1jbA$/QjtSKW/u0yrzjyhXN3IODMCXLql.2xtHx.aKhyvFPA', # user12345
     },
     {
         'role': 'admin',
