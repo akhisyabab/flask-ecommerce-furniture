@@ -33,6 +33,7 @@ def create_app(script_info=None):
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config['PROPAGATE_EXCEPTIONS'] = True
+    app.config['PRODUCT_IMAGE'] = 'static/products/images'
 
     # set up extensions
     db.init_app(app)

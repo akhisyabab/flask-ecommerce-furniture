@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+import os
+
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_user, current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 
-from project.models.models import User, Category
+from project.models.models import User, Category, Product
 from project.utils.decorator import admin_required
 from project import db
 
@@ -179,3 +181,89 @@ def category_edit(category_id):
             flash('ERROR! ({}) '.format(e), 'error')
 
     return render_template('category_edit.html', category=category)
+
+# Products ############################################
+@admin_blueprint.route('/admin/products')
+@login_required
+def products():
+    all_product = Product.query.all()
+    return render_template('products.html', products=all_product, cat=Category)
+
+
+@admin_blueprint.route('/admin/product_add', methods=['GET', 'POST'])
+@login_required
+def product_add():
+    all_category = Category.query.all()
+    if request.method == 'POST':
+        try:
+            product_name = request.form.get('product-name')
+            product_price = request.form.get('product-price')
+            product_description = request.form.get('product-description')
+            product_image_file = request.files['product-image']
+            if product_image_file:
+                product_image = '{}-{}'.format(product_name, product_image_file.filename)
+                basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+                product_image_file.save(os.path.join(basedir, current_app.config['PRODUCT_IMAGE'], product_image))
+            else:
+                product_image = None
+
+            product_stock = request.form.get('product-stock')
+            product_category_id = request.form.get('product-category_id')
+            new_product = Product(product_name, product_price, product_description, product_image, product_stock, product_category_id)
+            db.session.add(new_product)
+            db.session.commit()
+            return redirect(url_for('admin.products'))
+
+        except IntegrityError as e:
+            db.session.rollback()
+            flash('ERROR! ({}) '.format(e), 'error')
+
+    return render_template('product_add.html', categories=all_category)
+
+
+@admin_blueprint.route('/admin/product_delete/<product_id>')
+@login_required
+def product_delete(product_id):
+    product = Product.find_by_id(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('admin.products'))
+
+
+@admin_blueprint.route('/admin/product_edit/<product_id>', methods=['GET', 'POST'])
+@login_required
+def product_edit(product_id):
+    product = Product.find_by_id(product_id)
+    all_category = Category.query.all()
+    if request.method == 'POST':
+        try:
+            product_name = request.form.get('product-name')
+            product_price = request.form.get('product-price')
+            product_description = request.form.get('product-description')
+            product_image_file = request.files['product-image']
+            if product_image_file:
+                product_image = '{}-{}'.format(product_name, product_image_file.filename)
+                basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+                product_image_file.save(os.path.join(basedir, current_app.config['PRODUCT_IMAGE'], product_image))
+            else:
+                product_image = None
+
+            product_stock = request.form.get('product-stock')
+            product_category_id = request.form.get('product-category_id')
+
+            product.name = product_name
+            product.price = product_price
+            product.description = product_description
+            if product_image_file:
+                product.image = product_image
+            product.stock = product_stock
+            product.category = product_category_id
+
+            db.session.commit()
+            return redirect(url_for('admin.products'))
+
+        except IntegrityError as e:
+            db.session.rollback()
+            flash('ERROR! ({}) '.format(e), 'error')
+
+    return render_template('product_edit.html', product=product, categories=all_category, cat=Category)

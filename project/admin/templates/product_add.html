@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% from "_form_macros.html" import render_field %}
+
+{% block title %}
+Products
+{% endblock %}
+
+{% block body %}
+{% include 'navbar.html' %}
+{% include 'sidebar.html' %}
+{% include 'allert_message.html' %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Products</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Products data</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Add product</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form role="form" action="{{ url_for('admin.product_add') }}" method="post" enctype="multipart/form-data">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Product name</label>
+                                    <div class="nk-int-st">
+                                        <input type="text" class="form-control input-sm" placeholder="product name"
+                                               name="product-name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <div class="nk-int-st">
+                                        <input type="text" class="form-control input-sm" placeholder="product price"
+                                               name="product-price">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="textarea" placeholder="Place some text here"  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="product-description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <div class="nk-int-st">
+                                        <input type="file" id="product-image" name="product-image">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Stock</label>
+                                    <div class="nk-int-st">
+                                        <input type="text" class="form-control input-sm" placeholder="stock total"
+                                               name="product-stock">
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="custom-select" name="product-category_id">
+                                      <option value="">Select category</option>
+                                      {% for category in categories %}
+                                      <option value="{{category.id}}">{{category.name}}</option>
+                                      {% endfor %}
+                                    </select>
+                                 </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}
