@@ -45,7 +45,7 @@ $ ./scripts/run.sh
 ```sh
 sudo ./scripts/docker_run_dev.sh
 ```
-**open localhost:5001/admin*
+**open localhost:5000/admin*
 
 
 <hr><hr>
