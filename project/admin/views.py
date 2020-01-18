@@ -209,7 +209,8 @@ def product_add():
 
             product_stock = request.form.get('product-stock')
             product_category_id = request.form.get('product-category_id')
-            new_product = Product(product_name, product_price, product_description, product_image, product_stock, product_category_id)
+            is_top_product = request.form.get('is-top-product')
+            new_product = Product(product_name, product_price, product_description, product_image, product_stock, product_category_id, is_top_product)
             db.session.add(new_product)
             db.session.commit()
             return redirect(url_for('admin.products'))
@@ -250,6 +251,7 @@ def product_edit(product_id):
 
             product_stock = request.form.get('product-stock')
             product_category_id = request.form.get('product-category_id')
+            is_top_product = request.form.get('is-top-product')
 
             product.name = product_name
             product.price = product_price
@@ -258,6 +260,9 @@ def product_edit(product_id):
                 product.image = product_image
             product.stock = product_stock
             product.category = product_category_id
+            product.is_top_product = False
+            if is_top_product:
+                product.is_top_product = True
 
             db.session.commit()
             return redirect(url_for('admin.products'))

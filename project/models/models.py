@@ -102,14 +102,16 @@ class Product(db.Model):
     image = db.Column(db.String(128), nullable=False)
     stock = db.Column(db.Integer, nullable=True)
     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    is_top_product = db.Column(db.Boolean, nullable=True, default=False)
 
-    def __init__(self, name, price, description, image, stock, category):
+    def __init__(self, name, price, description, image, stock, category, is_top_product):
         self.name = name
         self.price = price
         self.description = description
         self.image = image
         self.stock = stock
         self.category = category
+        self.is_top_product = is_top_product
 
     @classmethod
     def find_by_id(cls, id):

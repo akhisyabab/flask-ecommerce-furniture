@@ -85,6 +85,16 @@ Products
                                       {% endfor %}
                                     </select>
                                  </div>
+                                <div class="form-group">
+                                    <label>Top Product ? (will show on slider)</label>
+                                    <div class="nk-int-st">
+                                        {% if product.is_top_product %}
+                                            <input type="checkbox" name="is-top-product" checked/>
+                                        {% else %}
+                                        <input type="checkbox" name="is-top-product"/>
+                                        {% endif %}
+                                    </div>
+                                 </div>
                             </div>
                             <!-- /.card-body -->
 
